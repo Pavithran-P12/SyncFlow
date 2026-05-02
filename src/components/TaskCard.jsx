@@ -23,7 +23,7 @@ export const TaskCard = memo(({ task }) => {
   };
 
   return (
-    <div 
+    <div
       className={`task-card ${task.isBlocked ? 'blocked' : ''}`}
       draggable
       onDragStart={handleDragStart}
@@ -31,11 +31,11 @@ export const TaskCard = memo(({ task }) => {
       <div className="card-header">
         <h3 className="card-title">{task.title}</h3>
       </div>
-      
+
       <div style={{ fontSize: '11px', color: 'var(--text-secondary)', marginBottom: '8px' }}>
         Created: {new Date(task.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
       </div>
-      
+
       <div className="card-footer">
         <div className="card-owner">
           <div className="owner-avatar">
@@ -43,17 +43,17 @@ export const TaskCard = memo(({ task }) => {
           </div>
           <span>{task.owner}</span>
         </div>
-        
+
         <div className="card-actions">
-          <button 
-            className="icon-btn" 
+          <button
+            className="icon-btn"
             onClick={cycleStatus}
             title="Cycle Status"
             aria-label={`Cycle status for task: ${task.title}`}
           >
             {getStatusIcon()}
           </button>
-          <button 
+          <button
             className={`icon-btn ${task.isBlocked ? 'blocked-btn' : ''}`}
             onClick={() => toggleBlocker(task.id)}
             title="Mark as blocked"

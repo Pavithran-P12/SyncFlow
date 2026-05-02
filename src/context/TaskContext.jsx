@@ -71,7 +71,7 @@ export const TaskProvider = ({ children }) => {
     if (finalOwner === 'Me' && user) {
       finalOwner = user.displayName || user.email.split('@')[0];
     }
-    
+
     const newTask = {
       title: taskData.title,
       owner: finalOwner,
@@ -99,7 +99,7 @@ export const TaskProvider = ({ children }) => {
   const toggleBlocker = useCallback(async (id) => {
     const task = tasks.find(t => t.id === id);
     if (!task) return;
-    
+
     if (isFirebaseActive) {
       await updateTask(id, { isBlocked: !task.isBlocked });
     } else {

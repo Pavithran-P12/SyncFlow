@@ -41,11 +41,11 @@ export const subscribeToTasks = (callback) => {
   if (!db) {
     console.warn("Mocking Firestore: Using empty array.");
     callback([]);
-    return () => {};
+    return () => { };
   }
-  
+
   const q = query(collection(db, TASKS_COLLECTION), orderBy('createdAt', 'desc'));
-  
+
   return onSnapshot(q, (snapshot) => {
     const tasksData = [];
     snapshot.forEach((doc) => {
