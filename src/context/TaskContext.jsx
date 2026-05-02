@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
+import toast from 'react-hot-toast';
 import { parseMessage } from '../utils/parser';
 import { useAuth } from './AuthContext';
 import { subscribeToTasks, createTask, updateTask } from '../services/firebase';
@@ -35,11 +36,13 @@ const initialTasks = [
 export const TaskProvider = ({ children }) => {
   const [tasks, setTasks] = useState(initialTasks);
   const [isFirebaseActive, setIsFirebaseActive] = useState(false);
+  const [firebaseConnected, setFirebaseConnected] = useState(false);
   const { user } = useAuth();
 
   useEffect(() => {
     // Attempt Firebase Subscription
     const unsubscribe = subscribeToTasks((firebaseTasks) => {
+      setFirebaseConnected(true);
       if (firebaseTasks.length > 0) {
         setTasks(firebaseTasks);
         setIsFirebaseActive(true);
@@ -82,9 +85,11 @@ export const TaskProvider = ({ children }) => {
 
     if (isFirebaseActive) {
       await createTask(newTask);
+      toast.success(`Task "${newTask.title}" created for ${newTask.owner}`);
     } else {
       newTask.id = Math.random().toString(36).substr(2, 9);
       setTasks(prev => [...prev, newTask]);
+      toast.success(`Task "${newTask.title}" created for ${newTask.owner}`);
     }
   }, [isFirebaseActive]);
 
@@ -94,6 +99,7 @@ export const TaskProvider = ({ children }) => {
     } else {
       setTasks(prev => prev.map(t => t.id === id ? { ...t, status: newStatus } : t));
     }
+    toast.success(`Task moved to ${newStatus.replace('-', ' ')}`);
   }, [isFirebaseActive]);
 
   const toggleBlocker = useCallback(async (id) => {
@@ -109,18 +115,23 @@ export const TaskProvider = ({ children }) => {
 
   const parseMessageAndAddTask = useCallback((message) => {
     const parsedData = parseMessage(message);
-    if (parsedData) {
+    if (parsedData && parsedData.title) {
       addTask(parsedData);
+      return parsedData;
     }
+    toast.error('Could not parse message. Try: "I will fix the bug" or "Alice is working on API"');
+    return null;
   }, [addTask]);
 
   const contextValue = useMemo(() => ({
     tasks,
+    isFirebaseActive,
+    firebaseConnected,
     addTask,
     updateTaskStatus,
     toggleBlocker,
     parseMessageAndAddTask
-  }), [tasks, addTask, updateTaskStatus, toggleBlocker, parseMessageAndAddTask]);
+  }), [tasks, addTask, updateTaskStatus, toggleBlocker, parseMessageAndAddTask, isFirebaseActive, firebaseConnected]);
 
   return (
     <TaskContext.Provider value={contextValue}>

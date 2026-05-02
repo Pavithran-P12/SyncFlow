@@ -27,9 +27,12 @@ export const TaskCard = memo(({ task }) => {
       className={`task-card ${task.isBlocked ? 'blocked' : ''}`}
       draggable
       onDragStart={handleDragStart}
+      role="listitem"
+      aria-label={`Task: ${task.title}, assigned to ${task.owner}, status: ${task.status}${task.isBlocked ? ', BLOCKED' : ''}`}
     >
       <div className="card-header">
         <h3 className="card-title">{task.title}</h3>
+        {task.isBlocked && <span className="blocked-badge">🚨 Blocked</span>}
       </div>
 
       <div style={{ fontSize: '11px', color: 'var(--text-secondary)', marginBottom: '8px' }}>
