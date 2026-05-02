@@ -3,7 +3,7 @@
   height: 100vh;
   width: 100vw;
   overflow: hidden;
-  background: radial-gradient(circle at top left, #1a1c29, var(--bg-primary));
+  background: transparent;
 }
 
 /* Visibility Panel */
@@ -15,18 +15,20 @@
   display: flex;
   flex-direction: column;
   gap: 32px;
-  background: rgba(15, 17, 21, 0.6);
+  background: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(20px);
   z-index: 10;
 }
 
 .panel-header h1 {
-  font-size: 24px;
+  font-family: var(--font-display);
+  font-size: 26px;
   font-weight: 700;
   margin-bottom: 4px;
   display: flex;
   align-items: center;
   gap: 8px;
+  letter-spacing: -0.02em;
 }
 
 .panel-header p {
@@ -54,14 +56,14 @@
   justify-content: space-between;
   padding: 12px;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.05);
   transition: transform 0.2s ease, background 0.2s ease;
 }
 
 .team-member:hover {
   transform: translateY(-2px);
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.05);
 }
 
 .member-info {
@@ -85,7 +87,7 @@
 }
 
 .task-count {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.05);
   padding: 2px 8px;
   border-radius: 12px;
   font-size: 12px;
@@ -104,7 +106,7 @@
 .message-input-container {
   padding: 24px;
   border-bottom: var(--glass-border);
-  background: rgba(15, 17, 21, 0.4);
+  background: rgba(255, 255, 255, 0.4);
 }
 
 .input-wrapper {
@@ -125,8 +127,8 @@
   width: 100%;
   padding: 16px 16px 16px 48px;
   border-radius: 16px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(0, 0, 0, 0.05);
   color: var(--text-primary);
   font-size: 16px;
   transition: all 0.3s ease;
@@ -134,9 +136,10 @@
 }
 
 .message-input:focus {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.04);
   border-color: var(--accent-primary);
-  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+  box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15);
+  animation: pulse-glow 3s infinite;
 }
 
 .submit-btn {
@@ -180,10 +183,10 @@
   min-width: 300px;
   display: flex;
   flex-direction: column;
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(0, 0, 0, 0.02);
   border-radius: 16px;
   padding: 16px;
-  border: 1px dashed rgba(255, 255, 255, 0.05);
+  border: 1px dashed rgba(0, 0, 0, 0.05);
 }
 
 .column-header {
@@ -192,15 +195,17 @@
   justify-content: space-between;
   margin-bottom: 16px;
   padding-bottom: 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .column-header h2 {
-  font-size: 16px;
+  font-family: var(--font-display);
+  font-size: 18px;
   font-weight: 600;
   display: flex;
   align-items: center;
   gap: 8px;
+  letter-spacing: -0.01em;
 }
 
 .status-dot {
@@ -214,7 +219,7 @@
 .status-dot.done { background: var(--status-done); box-shadow: 0 0 8px var(--status-done); }
 
 .column-count {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.05);
   padding: 2px 8px;
   border-radius: 12px;
   font-size: 12px;
@@ -238,15 +243,17 @@
   border-radius: 12px;
   padding: 16px;
   cursor: grab;
-  transition: all 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
+  animation: fadeIn 0.4s ease-out forwards;
 }
 
 .task-card:hover {
-  transform: translateY(-2px);
+  transform: translateY(-4px) scale(1.01);
   box-shadow: var(--glass-shadow);
-  border-color: rgba(255, 255, 255, 0.15);
+  border-color: rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.9);
 }
 
 .task-card:active {
@@ -301,7 +308,7 @@
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.05);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -321,13 +328,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.05);
   color: var(--text-secondary);
   transition: all 0.2s ease;
 }
 
 .icon-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.1);
   color: var(--text-primary);
 }
 

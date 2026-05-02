@@ -1,4 +1,5 @@
 import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
 import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, query, orderBy } from 'firebase/firestore';
 
 // 1. Firebase Configuration Template (Secrets in .env)
@@ -14,11 +15,13 @@ const firebaseConfig = {
 // Initialize Firebase only if config exists to prevent immediate crashes during setup
 let app;
 let db;
+export let auth;
 
 try {
   if (firebaseConfig.apiKey) {
     app = initializeApp(firebaseConfig);
     db = getFirestore(app);
+    auth = getAuth(app);
   } else {
     console.warn("Firebase config not found. Please add .env files.");
   }

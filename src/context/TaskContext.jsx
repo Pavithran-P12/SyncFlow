@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
 import { parseMessage } from '../utils/parser';
+import { useAuth } from './AuthContext';
 import { subscribeToTasks, createTask, updateTask } from '../services/firebase';
 
 const TaskContext = createContext();
@@ -34,6 +35,7 @@ const initialTasks = [
 export const TaskProvider = ({ children }) => {
   const [tasks, setTasks] = useState(initialTasks);
   const [isFirebaseActive, setIsFirebaseActive] = useState(false);
+  const { user } = useAuth();
 
   useEffect(() => {
     // Attempt Firebase Subscription
@@ -65,9 +67,14 @@ export const TaskProvider = ({ children }) => {
   }, [tasks, isFirebaseActive]);
 
   const addTask = useCallback(async (taskData) => {
+    let finalOwner = taskData.owner || 'Me';
+    if (finalOwner === 'Me' && user) {
+      finalOwner = user.displayName || user.email.split('@')[0];
+    }
+    
     const newTask = {
       title: taskData.title,
-      owner: taskData.owner || 'Me',
+      owner: finalOwner,
       status: taskData.status || 'todo',
       isBlocked: false,
       createdAt: Date.now(),
