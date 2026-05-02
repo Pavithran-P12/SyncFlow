@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
 import toast from 'react-hot-toast';
 import { parseMessage } from '../utils/parser';
 import { useAuth } from './AuthContext';
@@ -91,7 +91,7 @@ export const TaskProvider = ({ children }) => {
       setTasks(prev => [...prev, newTask]);
       toast.success(`Task "${newTask.title}" created for ${newTask.owner}`);
     }
-  }, [isFirebaseActive]);
+  }, [isFirebaseActive, user]);
 
   const updateTaskStatus = useCallback(async (id, newStatus) => {
     if (isFirebaseActive) {
@@ -140,4 +140,5 @@ export const TaskProvider = ({ children }) => {
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useTasks = () => useContext(TaskContext);

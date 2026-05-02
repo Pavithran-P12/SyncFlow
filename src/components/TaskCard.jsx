@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { AlertCircle, CheckCircle2, Circle, Clock } from 'lucide-react';
 import { useTasks } from '../context/TaskContext';
 

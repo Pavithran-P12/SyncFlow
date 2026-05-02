@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { useTasks } from '../context/TaskContext';
 import { TaskCard } from './TaskCard';
 
@@ -8,14 +8,14 @@ const EMPTY_MESSAGES = {
   'done': { emoji: '🎉', text: 'All clear! Complete tasks will appear here.' }
 };
 
+const columns = [
+  { id: 'todo', title: 'To Do', status: 'todo' },
+  { id: 'in-progress', title: 'In Progress', status: 'in-progress' },
+  { id: 'done', title: 'Done', status: 'done' }
+];
+
 export const TaskBoard = () => {
   const { tasks, updateTaskStatus } = useTasks();
-
-  const columns = [
-    { id: 'todo', title: 'To Do', status: 'todo' },
-    { id: 'in-progress', title: 'In Progress', status: 'in-progress' },
-    { id: 'done', title: 'Done', status: 'done' }
-  ];
 
   const groupedTasks = useMemo(() => {
     const grouped = {};

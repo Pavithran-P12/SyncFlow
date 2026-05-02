@@ -1,5 +1,5 @@
-import React, { useState, useMemo } from 'react';
-import { Send, Zap, User, FileText } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { Zap, User, FileText } from 'lucide-react';
 import { useTasks } from '../context/TaskContext';
 import { parseMessage } from '../utils/parser';
 

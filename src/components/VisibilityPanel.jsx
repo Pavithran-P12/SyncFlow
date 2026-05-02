@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { Layers, Activity, Wifi, WifiOff } from 'lucide-react';
 import { useTasks } from '../context/TaskContext';
 
