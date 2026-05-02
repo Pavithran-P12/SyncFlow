@@ -7,7 +7,8 @@ on:
 env:
   PROJECT_ID: hack2skill-89f79
   SERVICE: syncflow
-  REGION: us-central1
+  REGION: asia-south1
+  AR_REPO: asia-south1-docker.pkg.dev/hack2skill-89f79/syncflow
 
 jobs:
   deploy:
@@ -30,7 +31,7 @@ jobs:
         uses: google-github-actions/setup-gcloud@v2
 
       - name: Authorize Docker push
-        run: gcloud auth configure-docker
+        run: gcloud auth configure-docker asia-south1-docker.pkg.dev
 
       - name: Build and Push Container
         run: |
@@ -41,8 +42,8 @@ jobs:
             --build-arg VITE_FIREBASE_STORAGE_BUCKET=${{ secrets.VITE_FIREBASE_STORAGE_BUCKET }} \
             --build-arg VITE_FIREBASE_MESSAGING_SENDER_ID=${{ secrets.VITE_FIREBASE_MESSAGING_SENDER_ID }} \
             --build-arg VITE_FIREBASE_APP_ID=${{ secrets.VITE_FIREBASE_APP_ID }} \
-            -t gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }} .
-          docker push gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}
+            -t ${{ env.AR_REPO }}/${{ env.SERVICE }}:${{ github.sha }} .
+          docker push ${{ env.AR_REPO }}/${{ env.SERVICE }}:${{ github.sha }}
 
       - name: Deploy to Cloud Run
         id: deploy
@@ -50,7 +51,7 @@ jobs:
         with:
           service: ${{ env.SERVICE }}
           region: ${{ env.REGION }}
-          image: gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}
+          image: ${{ env.AR_REPO }}/${{ env.SERVICE }}:${{ github.sha }}
           flags: --allow-unauthenticated
 
       - name: Show Output
